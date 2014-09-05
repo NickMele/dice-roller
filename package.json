@@ -1,0 +1,23 @@
+{
+  "name": "dice-roller",
+  "version": "0.0.0",
+  "description": "Dice Rolling API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/NickMele/dice-roller.git"
+  },
+  "author": "Nick Mele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NickMele/dice-roller/issues"
+  },
+  "homepage": "https://github.com/NickMele/dice-roller",
+  "dependencies": {
+    "express": "^4.8.8",
+    "lodash": "^2.4.1"
+  }
+}
