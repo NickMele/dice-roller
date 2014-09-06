@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var port = 3000;
 var roll = require('./handlers/roll');
-var notation = require('./lib/notation');
 
 /*
  * All rolls must follow the format below
