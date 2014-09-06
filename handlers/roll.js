@@ -1,39 +1,31 @@
 var _ = require('lodash');
-
-function roll(sides) {
-  var min = 1;
-  var max = sides;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+var notation = require(process.cwd() + '/lib/notation');
+var Die = require(process.cwd() + '/lib/die');
 
 module.exports = function(req, res, next) {
-  var repeat = parseInt(req.params.repeat || 1, 10);
-  var sides = parseInt(req.params.sides || 20, 10);
-  var modifier = parseInt(req.params.modifier || 0, 10);
+  var command = req.params.command || 'd20';
+  var parsed = notation.parse(command);
+  var die = new Die(parsed.X);
   var rolls = [];
-  var total = 0;
-  var modified_total = 0;
+  var total = null;
+  var results = {};
 
-  _.times(repeat, function(n) {
-    var outcome = roll(sides);
+  // make the rolls
+  _.times(parsed.A, function(n) {
+    var outcome = die.roll();
     rolls.push(outcome);
   });
 
+  // determine the total of the rolls without the modifier
   total = _.reduce(rolls, function(sum, roll) {
     return sum + roll;
   });
 
-  if (modifier) {
-    modified_total = total + modifier;
-  }
-
-  var results = {
-    repeat: repeat,
-    sides: sides,
-    modifier: modifier,
+  results = {
+    command: command,
+    parsed: parsed,
     rolls: rolls,
-    total: total,
-    modified_total: modified_total
+    total: total
   };
 
   return res.send(results);
