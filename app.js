@@ -1,12 +1,13 @@
 var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var errorhandler = require('errorhandler');
 
 var roll = require('./handlers/roll');
 
 var app = express();
 
-// application configuration
+// all environments
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -18,6 +19,11 @@ app.use('/slack', function(req, res, next) {
   res.locals.command = command;
   return next();
 });
+
+// development only
+if ('development' == app.get('env')) {
+  app.use(errorhandler());
+}
 
 app.get('/roll/:command?', roll);
 app.post('/slack', roll);
