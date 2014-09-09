@@ -1,0 +1,4 @@
+{
+  "name": "dicebot",
+  "triggers": ["roll"]  
+}
